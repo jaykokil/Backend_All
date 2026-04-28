@@ -17,3 +17,16 @@ app.use("/api/readings", readingRoutes);
 const PORT = process.env.PORT || 5000;
 if (!process.env.MONGO_URI) { console.error("MONGO_URI missing"); process.exit(1); }
 mongoose.connect(process.env.MONGO_URI).then(() => app.listen(PORT, () => console.log(`Server running on ${PORT}`))).catch(e => { console.error(e); process.exit(1); });
+app.post("/api/login", (req, res) => {
+  const { username, password } = req.body;
+
+  // demo login
+  if (username && password) {
+    return res.json({
+      success: true,
+      user: { username }
+    });
+  }
+
+  res.status(401).json({ message: "Invalid credentials" });
+});
